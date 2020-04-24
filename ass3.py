@@ -1,3 +1,4 @@
+import math
 
 def find_primes(n):
 	"""
@@ -58,10 +59,70 @@ def fast_powering_alg(x, exp, mod):
 	return return_val % mod
 
 
+def gcd_ext(n, x):
+	'''
+    NB:  x mod(n)
+	'''
+
+	if n == 0:
+		return x, 0, 1
+
+	gcd, new_s, new_p = gcd_ext(x%n, n)
+	s = new_p - (x//n) * new_s
+	p = new_s
+
+	return gcd, s, p
+
+def calc_gcd(a, b):
+	gcd, s, p = gcd_ext(a, b)
+	assert( (p*b + s*a) == gcd )
+	return gcd
+
+def calc_inverse(num, mod):
+	gcd, s, p = gcd_ext(mod, num)
+	assert( (p*num + s*mod) == gcd )
+	return p
+
+def calc_gcd2(N):
+	''' N = list of numbers
+	'''
+
+	a = N[0]
+	for i in range(1, len(N)):
+		b = N[i]
+		a = calc_gcd(a, b)
+
+
+	return a
+
+
 
 def main():
+
+    #question 1
 	find_primes(100)
+    #question 2
 	fast_powering_alg(2, 521, 100)
+
+	#question 3
+
+	# x (mod n) 197189 (mod 999979)
+	x = 197189
+	n = 999979
+	inverse = calc_inverse(x, n)
+	print("inverse of {} (mod {}) is {}".format(x,n,inverse))
+	a = 2**1000 - 299
+	b = math.factorial(1000) + 98
+	gcd = calc_gcd(a, b)
+	print("gcd( 2^1000 - 299 , 1000! + 98 ): {}".format(gcd))
+
+	#  gcd for a, b, c, d, e
+	N = [887519, 146744, 388025, 880464, 189074]
+	gcd = calc_gcd2(N)
+	print("gcd( {} , {} , {} , {} ,  {}): {}".format(N[0],N[1],N[2],N[3],N[4],gcd))
+
+
+    
 	return
 
 if __name__ == '__main__':

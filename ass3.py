@@ -42,7 +42,6 @@ def fast_powering_alg(x, exp, mod):
 	largest_val = my_expos[0]
 	# remove the largest value
 	my_expos.remove(my_expos[0])
-<<<<<<< HEAD
 	#subtract the largest value from the given exponent
 	if(exp == largest_val):
 		my_expos.remove(my_expos[0])
@@ -69,32 +68,6 @@ def fast_powering_alg(x, exp, mod):
 		return_val *= (x**num) % mod
 	print(return_list)
 	print("Fast powering found the last 5 digits as {}".format(return_val % mod))
-	return return_val % mod
-
-
-def main():
-	print("Problem 1")
-	find_primes(100)
-	print("\nProblem 2")
-	fast_powering_alg(2, 600, 100000)
-=======
-	# subtract the largest value from the given exponent
-	exp -= largest_val
-	# add the largest value to the return list
-	return_list.append(largest_val)
-	# if the largest value is the exponent, calculate the modular arithmetic
-	if (exp == 0):
-		return (x ** largest_val) % mod
-	# otherwise find a combination of numbers that add up to the exponent
-	for num in my_expos:
-		# if the exponent - number is greater than zero
-		if (exp - num >= 0):
-			exp -= num  # subtract from the exponent
-			return_list.append(num)  # add the number to the return value list
-	# iterate through the list and calculate the value
-	for num in return_list:
-		return_val *= (x ** num) % mod
-	# print("Fast powering found the last 2 digits as {}".format(return_val % mod))
 	return return_val % mod
 
 
@@ -165,10 +138,6 @@ def Miller_Rabine_test(p: int, k: int) -> str:
 			return "composite"
 	return "probably prime"
 
-
-
-
-
 def main():
 	# question 1
 	find_primes(100)
@@ -205,8 +174,6 @@ def main():
 	num_tests = 10
 	r = Miller_Rabine_test(prime, num_tests)
 	print("Miller-Rabine algorithm with {} tests states that {} is {}.".format(num_tests, prime, r))
-
->>>>>>> 47cd54243ba0d42b972235651199a5875f1d7b66
 	return
 
 

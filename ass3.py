@@ -10,7 +10,7 @@ def find_primes(n):
 		#iterate from 2 to i
 		for j in range(2, i):
 			#if the i mod j is zero it is not a prime
-			if( i % j) == 0:
+			if(i % j) == 0:
 				break
 		else:
 			#otherwise it is a prime
@@ -39,29 +39,39 @@ def fast_powering_alg(x, exp, mod):
 	#remove the largest value
 	my_expos.remove(my_expos[0])
 	#subtract the largest value from the given exponent
-	exp -= largest_val
-	#add the largest value to the return list
-	return_list.append(largest_val)
+	if(exp == largest_val):
+		my_expos.remove(my_expos[0])
+	else:
+		exp -= largest_val
+		#add the largest value to the return list
+		return_list.append(largest_val)
 	#if the largest value is the exponent, calculate the modular arithmetic
-	if(exp == 0):
-		return (x**largest_val) % mod
+	j = 0
+	max_index = len(return_list) - 1
 	#otherwise find a combonation of numbers that add up to the exponent
-	for num in my_expos:
+	while(exp != 0):
+		num = my_expos[j]
 		#if the exponent - number is greater than zero
 		if(exp - num >= 0):
 			exp -= num #subtract from the exponent
 			return_list.append(num) # add the number to the return value list
+		if(num == my_expos[-1]):
+			j = 0
+		else:
+			j = j + 1
 	#iterate through the list and calculate the value 
 	for num in return_list:
 		return_val *= (x**num) % mod
-	print("Fast powering found the last 2 digits as {}".format(return_val % mod))
+	print(return_list)
+	print("Fast powering found the last 5 digits as {}".format(return_val % mod))
 	return return_val % mod
 
 
-
 def main():
+	print("Problem 1")
 	find_primes(100)
-	fast_powering_alg(2, 521, 100)
+	print("\nProblem 2")
+	fast_powering_alg(2, 600, 100000)
 	return
 
 if __name__ == '__main__':

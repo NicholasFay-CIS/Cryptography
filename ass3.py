@@ -23,6 +23,7 @@ def find_primes(n):
 
 
 def fast_powering_alg(x, exp, mod):
+	print([x, exp, mod])
 	"""
 	int, int, int -> int
 	This function is supposed to replicate the fast powering algorithm.
@@ -44,7 +45,8 @@ def fast_powering_alg(x, exp, mod):
 	my_expos.remove(my_expos[0])
 	#subtract the largest value from the given exponent
 	if(exp == largest_val):
-		my_expos.remove(my_expos[0])
+		exp -= my_expos[0]
+		return_list.append(my_expos[0])
 	else:
 		exp -= largest_val
 		#add the largest value to the return list
@@ -66,8 +68,6 @@ def fast_powering_alg(x, exp, mod):
 	#iterate through the list and calculate the value 
 	for num in return_list:
 		return_val *= (x**num) % mod
-	print(return_list)
-	print("Fast powering found the last 5 digits as {}".format(return_val % mod))
 	return return_val % mod
 
 
@@ -142,7 +142,7 @@ def main():
 	# question 1
 	find_primes(100)
 	# question 2
-	fast_powering_alg(2, 521, 100)
+	#fast_powering_alg(76, 2, )
 
 	# question 3
 

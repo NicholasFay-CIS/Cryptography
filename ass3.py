@@ -138,6 +138,27 @@ def Miller_Rabine_test(p: int, k: int) -> str:
 			return "composite"
 	return "probably prime"
 
+def remainder(x, m):
+  k = len(m)
+  
+  # Compute the product of the divisors (n1.n2.n3....nk)
+  M = 1
+  for i in range(k):
+    M *= m[i]
+
+  # Solution X
+  X = 0
+  for i in range(k):
+    M_i = M / m[i]
+
+    # Find the inverse N_i
+    N_i = calc_inverse(M_i, m[i])
+
+    X += x[i] * N_i * M_i
+	#return fast_powering_alg(X,1,M)
+  return X % M_i
+
+
 def main():
 	# question 1
 	find_primes(100)
@@ -174,8 +195,17 @@ def main():
 	num_tests = 10
 	r = Miller_Rabine_test(prime, num_tests)
 	print("Miller-Rabine algorithm with {} tests states that {} is {}.".format(num_tests, prime, r))
-	return
+	
 
+	# qustion 5
+    # wikipedia example
+	n = [3, 4, 5]
+
+	a = [2, 3, 1]
+
+
+	x = remainder(a, n)
+	print("Chinese Remainder thm:\nList X = {}\nList M = {}\nOutput: {}".format(a,n,x))
 
 if __name__ == '__main__':
 	main()

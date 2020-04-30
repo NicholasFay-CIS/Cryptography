@@ -131,12 +131,16 @@ def Miller_Rabine_test(p: int, k: int) -> str:
 			if x == 1 or x == p - 1:
 				break
 			else:
+				caller = False
 				for i in range(r -1):
 					x = fast_powering_alg(x, 2, p)
 					if x == 1:
-						break
+						caller = True
+				if caller:
+					break
 			return "composite"
 	return "probably prime"
+
 
 def remainder(x, m):
   k = len(m)
@@ -185,8 +189,8 @@ def main():
 	# question 4
 
 	# check that 1223 is prime
-	prime = 1223
-	num_tests = 50
+	prime = 7177
+	num_tests = 10
 	r = Miller_Rabine_test(prime, num_tests)
 	print("Miller-Rabine algorithm with {} tests states that {} is {}.".format(num_tests, prime, r))
 
@@ -195,7 +199,6 @@ def main():
 	num_tests = 10
 	r = Miller_Rabine_test(prime, num_tests)
 	print("Miller-Rabine algorithm with {} tests states that {} is {}.".format(num_tests, prime, r))
-	
 
 	# qustion 5
     # wikipedia example

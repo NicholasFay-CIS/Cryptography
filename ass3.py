@@ -23,51 +23,47 @@ def find_primes(n):
 
 
 def fast_powering_alg(x, exp, mod):
-	print([x, exp, mod])
 	"""
 	int, int, int -> int
 	This function is supposed to replicate the fast powering algorithm.
 	"""
 	my_expos = list()
+	calculated_list = list()
 	return_list = list()
+	calculated_dict = dict()
 	return_val = 1
 	i = 1
-	# get all of the exponents that is less than or
-	# equal to the passed in exponent
+	j = 0
 	while i <= exp:
+		if(i == 1):
+			val = x
+		else:
+			val = ((calculated_list[-1] * calculated_list[-1]) % mod)
+		calculated_dict[i] = val
+		calculated_list.append(val)
 		my_expos.append(i)
-		i = i * 2
-	# sort the list from largest to smallest
+		i *=  2
 	my_expos.reverse()
-	# grab the largest value
 	largest_val = my_expos[0]
-	# remove the largest value
 	my_expos.remove(my_expos[0])
-	#subtract the largest value from the given exponent
 	if(exp == largest_val):
 		exp -= my_expos[0]
 		return_list.append(my_expos[0])
 	else:
 		exp -= largest_val
-		#add the largest value to the return list
 		return_list.append(largest_val)
-	#if the largest value is the exponent, calculate the modular arithmetic
-	j = 0
-	max_index = len(return_list) - 1
-	#otherwise find a combonation of numbers that add up to the exponent
 	while(exp != 0):
 		num = my_expos[j]
-		#if the exponent - number is greater than zero
 		if(exp - num >= 0):
-			exp -= num #subtract from the exponent
-			return_list.append(num) # add the number to the return value list
+			exp -= num
+			return_list.append(num)
 		if(num == my_expos[-1]):
 			j = 0
-		else:
-			j = j + 1
-	#iterate through the list and calculate the value 
-	for num in return_list:
-		return_val *= (x**num) % mod
+			continue
+		j = j + 1
+	for power in calculated_dict.keys():
+		if(power in return_list):
+			return_val *= (calculated_dict[power])
 	return return_val % mod
 
 

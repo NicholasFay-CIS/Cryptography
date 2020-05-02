@@ -28,8 +28,6 @@ def fast_powering_alg(x, exp, mod):
 	int, int, int -> int
 	This function is supposed to replicate the fast powering algorithm.
 	"""
-	if exp == 2:
-		return (x**2) % mod
 	my_expos = list()
 	calculated_list = list()
 	return_list = list()
@@ -180,10 +178,11 @@ def prime_factors(s, n):
 	while (n % 2 == 0):
 		s.add(2)
 		n = n // 2
-	# n must be odd at this po. So we can
+	# n must be odd at this point. So we can
 	# skip one element (Note i = i +2)
 	square_root = int(math.sqrt(n))
-	for i in range(3, square_root, 2):
+	list_primes = find_primes(square_root)
+	for i in list_primes:
 		while (n % i == 0):
 			s.add(i)
 			n = n // i

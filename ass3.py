@@ -3,24 +3,19 @@ import random
 
 
 def find_primes(n):
-	"""
-	int -> list
-	This function returns a list of all primes less than n
-	"""
-	list_of_primes = list()
-	# iterate from 2 to n since 1 is not a prime
-	for i in range(2, n):
-		# iterate from 2 to i
-		for j in list_of_primes:
-			# if the i mod j is zero it is not a prime
-			if(i % j) == 0:
-				break
-		else:
-			# otherwise it is a prime
-			list_of_primes.append(i)
-			# print(list_of_primes)
-	print("There are {} primes. {}".format(len(list_of_primes), list_of_primes))
-	return list_of_primes
+    i = 2
+    d = {}
+    list_of_primes = []
+    while(i < n):
+        while (d.get(i) == None):
+            list_of_primes.append(i)
+            total = i
+            while (total < n):
+                d[total] = 1
+                total += i
+            i += 1
+        i += 1
+    return list_of_primes
 
 
 def fast_powering_alg(x, exp, mod):
@@ -174,13 +169,36 @@ def remainder(x, m):
   return X % M_i
 
 
+def is_divisible(n, small_primes: list):
+	for number in small_primes:
+		if (n % number) == 0:
+			return True
+	return False
+
+
 def prime_factors(s, n):
-	while (n % 2 == 0):
-		s.add(2)
-		n = n // 2
-	# n must be odd at this point. So we can
-	# skip one element (Note i = i +2)
-	square_root = int(math.sqrt(n))
+	# while (n % 2 == 0):
+	# 	s.add(2)
+	# 	n = n // 2
+
+	list_of_n = [n]
+	small_prime_list = find_primes(100000)
+	check_small_primes = small_prime_list
+
+	while is_divisible(min(list_of_n), check_small_primes):
+		n1 = min(list_of_n)
+		for small_prime in check_small_primes:
+			n2 = n1
+			while (n2 % small_prime == 0):
+				s.add(small_prime)
+				n2 = n2//small_prime
+			else:
+				if n2 not in list_of_n:
+					list_of_n.append(n2)
+				n2 = n1
+
+
+	square_root = int(math.sqrt(min(list_of_n)))
 	list_primes = find_primes(square_root)
 	for i in list_primes:
 		while (n % i == 0):
@@ -211,9 +229,15 @@ def primitive_root(n):
 
 def main():
 	# question 1
-	print("Question 1")
-	find_primes(100)
-	find_primes(367400)
+	print("Question 1:")
+	n = 100
+	x = find_primes(n)
+	print("Find primes less than {}".format(n))
+	print("There are {} primes. {}".format(len(x), x))
+	n = 367400
+	x = find_primes(n)
+	print("Find primes less than {}".format(n))
+	print("There are {} primes. {}".format(len(x), x))
 	print()
 
 
@@ -254,21 +278,25 @@ def main():
 
 	# question 4
 	print("Question 4:")
-	# check that 5915587277 is prime
-	prime = 5915587277
-	num_tests = 10
-	r = Miller_Rabin_test(prime, num_tests)
-	print("Miller-Rabin with {} tests. Is {} prime? {}".format(num_tests, prime, r))
-	# check that 561 is not prime
-	prime = 561
-	num_tests = 10
-	r = Miller_Rabin_test(prime, num_tests)
-	print("Miller-Rabin with {} tests. Is {} prime? {}".format(num_tests, prime, r))
-	# generate prime over 1000 bits (302 digits)
 	bits = 1000
 	probable_prime = generate_prime(bits, 10)
 	print("A probable prime over {} bits = {}".format(bits, probable_prime))
 	print()
+
+	# test cases
+
+	# check that 5915587277 is prime
+	# prime = 5915587277
+	# num_tests = 10
+	# r = Miller_Rabin_test(prime, num_tests)
+	# print("Miller-Rabin with {} tests. Is {} prime? {}".format(num_tests, prime, r))
+
+	# check that 561 is not prime
+	# prime = 561
+	# num_tests = 10
+	# r = Miller_Rabin_test(prime, num_tests)
+	# print("Miller-Rabin with {} tests. Is {} prime? {}".format(num_tests, prime, r))
+	# generate prime over 1000 bits (302 digits)
 
 
 
@@ -294,6 +322,37 @@ def main():
 	prime = 37055228012567588205472561716198899109643
 	g = primitive_root(prime)
 	print("The smallest primitive root of {} = {}".format(prime, g))
+	print()
+
+	#Test Cases for 6a
+	# prime = 761
+	# g = primitive_root(prime)
+	# print("The smallest primitive root of {} = {}".format(prime, g))
+	# print()
+
+	# prime = 7
+	# g = primitive_root(prime)
+	# print("The smallest primitive root of {} = {}".format(prime, g))
+	#
+	# prime = 1223
+	# g = primitive_root(prime)
+	# print("The smallest primitive root of {} = {}".format(prime, g))
+	#
+	# prime = 9576890767
+	# g = primitive_root(prime)
+	# print("The smallest primitive root of {} = {}".format(prime, g))
+
+	print("Question 6c:")
+	print("We could used our primitive root finder function and alter it")
+	print("such that we solve for an order (x) rather than order p-1 and that")
+	print("the resulting solution will be y(mod p) rather than 1(mod p) which")
+	print("is what the primitve root finder does. While it might take longer")
+	print("than our primitive root finder (because the order will have a larger")
+	print("range of values) it will still be solvable.")
+
+
+
+
 
 if __name__ == '__main__':
 	main()

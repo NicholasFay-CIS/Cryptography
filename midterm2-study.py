@@ -67,7 +67,7 @@ def shanks_alg(a, b, N, k):
 	return -1
 
 def main():
-	num = shanks_alg(2, 1, 5, 1)
+	num = shanks_alg(2, 1, 5, 3)
 	print(num)
 
 main()

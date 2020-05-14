@@ -1,5 +1,5 @@
 import time
-
+from sympy import Matrix
 
 
 def list_and_sum_primes(n):
@@ -22,9 +22,35 @@ def list_and_sum_primes(n):
 	return prime_sum #, prime_list
 
 
-def main():
+def calc_matrix():
+	"""
+	None -> None
+	Calculate Ax = 0 (mod 2)
+	"""
+	#define matrices
+	A = numpy.matrix(
+	[[0,0,0,1,0,1,0,1,0,0],
+	[0,1,0,0,1,1,1,1,1,0],
+	[1,0,0,0,0,0,1,1,1,0],
+	[1,0,0,0,1,1,0,0,1,0],
+	[0,0,1,1,1,1,0,0,0,0],
+	[1,1,0,1,0,0,0,1,1,1],
+	[0,1,1,0,1,1,0,1,1,0],
+	[0,0,0,0,1,0,0,1,1,0],
+	[0,1,1,1,0,0,0,1,0,1],
+	[0,0,1,0,1,1,1,0,1,1]])
+	B = Matrix([[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]])
+	A = Matrix(A) #get proper matrix format
+	A = A.inv_mod(2) #get inverse of A mod 2
+	X = A * B # get X
+	#define inverse of A
+	print(X)
+	return 
 
-	n = 7654321
+
+def main():
+	"""
+	n = (10**8)
 	start_time = time.time()
 	sum = list_and_sum_primes(n)
 	# len_list = len(my_list)
@@ -32,6 +58,8 @@ def main():
 	# print("There are {} primes less than {}".format( n))
 	print("Their sum equals: {}".format(sum))
 	print("My program took", end_time - start_time, "seconds to run")
+	"""
+	calc_matrix()
 
 
 if __name__ == "__main__":

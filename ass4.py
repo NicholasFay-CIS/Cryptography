@@ -24,7 +24,7 @@ def list_and_sum_primes(n):
 
 def calc_matrix():
 	"""
-	None -> None
+	None -> VECTOR
 	Calculate Ax = 0 (mod 2)
 	"""
 	#define matrices
@@ -39,13 +39,13 @@ def calc_matrix():
 	[0,0,0,0,1,0,0,1,1,0],
 	[0,1,1,1,0,0,0,1,0,1],
 	[0,0,1,0,1,1,1,0,1,1]])
-	B = Matrix([[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]])
+	B = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]]
 	A = Matrix(A) #get proper matrix format
+	B = Matrix(B)
 	A = A.inv_mod(2) #get inverse of A mod 2
-	X = A * B # get X
-	#define inverse of A
+	X = A * B # A^-1 * B = X
 	print(X)
-	return 
+	return X
 
 
 def main():

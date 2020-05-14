@@ -28,8 +28,7 @@ def calc_matrix():
 	Calculate Ax = 0 (mod 2)
 	"""
 	#define matrices
-	A = numpy.matrix(
-	[[0,0,0,1,0,1,0,1,0,0],
+	A = [[0,0,0,1,0,1,0,1,0,0],
 	[0,1,0,0,1,1,1,1,1,0],
 	[1,0,0,0,0,0,1,1,1,0],
 	[1,0,0,0,1,1,0,0,1,0],
@@ -38,11 +37,16 @@ def calc_matrix():
 	[0,1,1,0,1,1,0,1,1,0],
 	[0,0,0,0,1,0,0,1,1,0],
 	[0,1,1,1,0,0,0,1,0,1],
-	[0,0,1,0,1,1,1,0,1,1]])
+	[0,0,1,0,1,1,1,0,1,1]]
 	B = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]]
 	A = Matrix(A) #get proper matrix format
 	B = Matrix(B)
-	A = A.inv_mod(2) #get inverse of A mod 2
+	try:
+		#make sure the matrix is not singular mod A
+		new = A.inv_mod(2) #get inverse of A mod 2
+		A = new
+	except:
+		pass
 	X = A * B # A^-1 * B = X
 	print(X)
 	return X

@@ -39,9 +39,10 @@ def calc_matrix():
 	[0,1,1,1,0,0,0,1,0,1],
 	[0,0,1,0,1,1,1,0,1,1]]
 	B = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]]
-	A = Matrix(A) #get proper matrix format
-	B = Matrix(B)
+	A_M = Matrix(A) #get proper matrix format
+	B_M = Matrix(B)
 	is_inv = False
+	j = 0
 	try:
 		#make sure the matrix is not singular mod A
 		A = A.inv_mod(5) #get inverse of A mod 2
@@ -51,8 +52,13 @@ def calc_matrix():
 	if(is_inv):
 		X = A * B # A^-1 * B = X
 		return X
-	echelon_form = A.rref()
-	print(echelon_form)
+	echelon_form = A_M.rref() # get the row reduced echelon form
+	X = echelon_form[-1] #get the resultant vector
+	while j < len(X): #apply the vector to the appropriate columns
+		for row in A:
+			row[j] *= X[j]
+		j += 1 
+	A_X = A #update at to be Ax
 	return
 
 

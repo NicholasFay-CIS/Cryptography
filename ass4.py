@@ -41,15 +41,19 @@ def calc_matrix():
 	B = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]]
 	A = Matrix(A) #get proper matrix format
 	B = Matrix(B)
+	is_inv = False
 	try:
 		#make sure the matrix is not singular mod A
-		new = A.inv_mod(2) #get inverse of A mod 2
-		A = new
+		A = A.inv_mod(5) #get inverse of A mod 2
+		is_inv = True
 	except:
 		pass
-	X = A * B # A^-1 * B = X
-	print(X)
-	return X
+	if(is_inv):
+		X = A * B # A^-1 * B = X
+		return X
+	echelon_form = A.rref()
+	print(echelon_form)
+	return
 
 
 def main():

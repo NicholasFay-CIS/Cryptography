@@ -45,7 +45,7 @@ def calc_matrix():
 	j = 0
 	try:
 		#make sure the matrix is not singular mod A
-		A = A.inv_mod(5) #get inverse of A mod 2
+		A = A_M.inv_mod(5) #get inverse of A mod 2
 		is_inv = True
 	except:
 		pass

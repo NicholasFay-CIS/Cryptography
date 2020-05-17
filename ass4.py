@@ -21,6 +21,31 @@ def list_and_sum_primes(n):
 
 	return prime_sum #, prime_list
 
+def row_echelon_form(M, p):
+    lead = 0
+    rowCount = len(M)
+    columnCount = len(M[0])
+    for r in range(rowCount):
+        if lead >= columnCount:
+            return
+        i = r
+        while M[i][lead] == 0:
+            i += 1
+            if i == rowCount:
+                i = r
+                lead += 1
+                if columnCount == lead:
+                    return
+
+        M[i],M[r] = M[r],M[i]
+        lv = M[r][lead]
+        M[r] = [ gmpy2.divm(mrx, lv, p) for mrx in M[r]]
+        for i in range(rowCount):
+            if i != r:
+                lv = M[i][lead]
+                M[i] = [ (iv - lv*rv) % p for rv,iv in zip(M[r],M[i])]
+        lead += 1
+    return M
 
 def calc_matrix():
 	"""
@@ -52,13 +77,17 @@ def calc_matrix():
 	if(is_inv):
 		X = A * B # A^-1 * B = X
 		return X
-	echelon_form = A_M.rref() # get the row reduced echelon form
+	echelon_form = row_echelon_form(A, 2) # get the row reduced echelon form
 	X = echelon_form[-1] #get the resultant vector
 	while j < len(X): #apply the vector to the appropriate columns
 		for row in A:
 			row[j] *= X[j]
 		j += 1 
 	A_X = A #update at to be Ax
+	for item in A_X:
+		sum_= 0
+		for val in item:
+			sum_ += val
 	return
 
 

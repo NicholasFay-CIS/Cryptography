@@ -21,32 +21,6 @@ def list_and_sum_primes(n):
 
 	return prime_sum #, prime_list
 
-def row_echelon_form(M, p):
-    lead = 0
-    rowCount = len(M)
-    columnCount = len(M[0])
-    for r in range(rowCount):
-        if lead >= columnCount:
-            return
-        i = r
-        while M[i][lead] == 0:
-            i += 1
-            if i == rowCount:
-                i = r
-                lead += 1
-                if columnCount == lead:
-                    return
-
-        M[i],M[r] = M[r],M[i]
-        lv = M[r][lead]
-        M[r] = [ gmpy2.divm(mrx, lv, p) for mrx in M[r]]
-        for i in range(rowCount):
-            if i != r:
-                lv = M[i][lead]
-                M[i] = [ (iv - lv*rv) % p for rv,iv in zip(M[r],M[i])]
-        lead += 1
-    return M
-
 def calc_matrix():
 	"""
 	None -> VECTOR
@@ -67,6 +41,7 @@ def calc_matrix():
 	A_M = Matrix(A) #get proper matrix format
 	B_M = Matrix(B)
 	is_inv = False
+	my_l = []
 	j = 0
 	try:
 		#make sure the matrix is not singular mod A
@@ -77,7 +52,7 @@ def calc_matrix():
 	if(is_inv):
 		X = A * B # A^-1 * B = X
 		return X
-	echelon_form = row_echelon_form(A, 2) # get the row reduced echelon form
+	echelon_form = Matrix.rref(A_M) # get the row reduced echelon form
 	X = echelon_form[-1] #get the resultant vector
 	while j < len(X): #apply the vector to the appropriate columns
 		for row in A:
@@ -88,11 +63,14 @@ def calc_matrix():
 		sum_= 0
 		for val in item:
 			sum_ += val
-	return
+		sum_ = sum_ % 2
+		my_l.append(sum_)
+	print("Ax mod 2 is  {}".format(my_l))
+	return X
 
 
 def main():
-	"""
+	# Problem 1
 	n = (10**8)
 	start_time = time.time()
 	sum = list_and_sum_primes(n)
@@ -101,7 +79,9 @@ def main():
 	# print("There are {} primes less than {}".format( n))
 	print("Their sum equals: {}".format(sum))
 	print("My program took", end_time - start_time, "seconds to run")
-	"""
+	#Problem 2
+	# From tests online it seemed that the only answer was trivial (meaning 0)
+	# This is the code that we used to find the non trivial solution but could not get Ax = 0 mod 2
 	calc_matrix()
 
 

@@ -58,8 +58,9 @@ def calc_matrix():
 		for row in A:
 			row[j] *= X[j]
 		j += 1 
-	A_X = A #update at to be Ax
-	for item in A_X:
+	A_X = A #update A to be Ax
+	print(A_X)
+	for item in A_X: #calculate AX mod 2
 		sum_= 0
 		for val in item:
 			sum_ += val

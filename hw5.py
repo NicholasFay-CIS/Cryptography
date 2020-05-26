@@ -6,7 +6,6 @@ def check_square_mod(a):
 	"""
 	is_sqr = math.sqrt(a)
 	if((is_sqr - math.floor(is_sqr)) == 0):
-		print(a, is_sqr, math.floor(is_sqr))
 		return True
 	return False
 
@@ -25,11 +24,11 @@ def squares(a, N):
 	while(True):
 		if(check_square_mod((x%N))):
 			root = math.floor(math.sqrt((x%N)))
-			print("{} = {}^2 (mod {})".format(x, root, N))
+			print("Some a ({}) % {} is not a square of some b. The smallest a that satisfies such is ~a = {} = {}^2 (mod {})".format(a, N, x, root, N))
 			return root
 		x += 1
 
-squares(99, 10)
+squares(90, 87)
 
 
 

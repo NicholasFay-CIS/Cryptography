@@ -14,7 +14,7 @@ def squares(a, N):
 	"""
 	a (int), N (int) -> None
 	"""
-	x = N + 1
+	x = a + 1
 	val = a % N
 	if(val != 0 and check_square_mod(val)):
 		root = math.floor(math.sqrt(val))

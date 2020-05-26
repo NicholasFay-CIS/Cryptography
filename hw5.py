@@ -28,7 +28,10 @@ def squares(a, N):
 			return root
 		x += 1
 
-squares(90, 87)
+def main():
+	while(True):
+		input1 = input("Enter an a (possible square mod N):\n")
+		input2 = input("Enter a N (modulus): ")
 
 
 

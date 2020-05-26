@@ -29,9 +29,19 @@ def squares(a, N):
 		x += 1
 
 def main():
-	while(True):
-		input1 = input("Enter an a (possible square mod N):\n")
-		input2 = input("Enter a N (modulus): ")
+	problem2 = True
+	while(problem2 == True):
+		input1 = int(input("Enter an a (possible square mod N):\n"))
+		input2 = int(input("Enter a N (modulus):\n"))
+		squares(input1, input2)
+		next_input = input("Do you want to continue yes or no?:\n")
+		if(next_input == "yes" or next_input == "Yes"):
+			continue
+		problem2 = False
+	return
+
+main()
+
 
 
 

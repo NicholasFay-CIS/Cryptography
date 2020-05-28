@@ -1,4 +1,9 @@
 import math
+try:
+    from sympy import Matrix
+except:
+    print("you need to download 'SymPy' library\n")
+    exit(-1)
 
 def check_square_mod(a):
 	"""
@@ -27,6 +32,27 @@ def squares(a, N):
 			print("Some a ({}) % {} is not a square of some b. The smallest a that satisfies such is ~a = {} = {}^2 (mod {})".format(a, N, x, root, N))
 			return root
 		x += 1
+
+def list_primes(n):
+	"""
+	From assignment 4
+	"""
+	num_line = [True for i in range(n+1)]
+	primes = []
+	p = 2
+	while (p * p <= n):
+		if num_line[p] == True:
+
+			for i in range(p * p, n+1, p):
+				num_line[i] = False
+
+		p += 1
+	for prime in range(2,n+1):
+		if num_line[prime] == True:
+			primes.append(prime)
+
+	return primes
+
 
 def find_B(X):
 	"""
@@ -62,34 +88,47 @@ def factor_list(list,p):
 
 def quad_sieve(N):
 	"""
+	Following text book steps
 	F(T) = T^2 - N
 	a = [√N] + 1
 	#F(a), F(a+1), F(a+2),...,F(b)
-	still needs work....
 	"""
 
-	#prime basis from 2 to 11
-	#TODO: 2 to B?
-	primes = (2,3,5,7,11)
-	print("N =",N)
-	print("B =",primes[-1])
+	#prime basis from 2 to B
+	primes = list_primes(int(find_B(N)))
+	print("factor base:",primes)
+	print("N = {} : B = {}".format(N,int(find_B(N))))
 	a = math.floor(math.sqrt(N)) + 1
 	#F(a), F(a+1), F(a+2),...,F(b)
-
 	F_list = []
+	F_pos = [] #positions
+	F_init = [] #initial list
 
-	#example
 	for a_i in range(0,a+1):
+		F_pos.append(a + a_i)
 		F_list.append(int(F_t(a + a_i,N)))
+	for item in F_list:
+		F_init.append(item)
 	print(F_list)
 	for prime in primes:
 		factor_list(F_list,prime)
 	print(F_list)
+	print()
 
-	#some steps
+	for i in range(len(F_list)):
+		if F_list[i] == 1:
+			print("| F({}) = {}  ".format(F_pos[i],F_init[i]), end="")
+	print()
+	print(F_pos)
+	A = []
+	A.append(F_init)
+	A.append(F_list)
+	M = Matrix(A)
+	print(M)
 
 def main():
-	problem2 = True
+	print("Probelm 2------\n")
+	problem2 = False
 	while(problem2 == True):
 		input1 = int(input("Enter an a (possible square mod N):\n"))
 		input2 = int(input("Enter a N (modulus):\n"))
@@ -98,13 +137,9 @@ def main():
 		if(next_input == "yes" or next_input == "Yes"):
 			continue
 		problem2 = False
+	print("Probelm 3------\n")
 
-	#find_B(221)
 	quad_sieve(221)
 	return
 
 main()
-
-
-
-

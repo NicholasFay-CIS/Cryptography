@@ -124,11 +124,11 @@ def quad_sieve(N):
 	A.append(F_init)
 	A.append(F_list)
 	M = Matrix(A)
-	print(M)
+	#print(M)
 
 def main():
 	print("Probelm 2------\n")
-	problem2 = False
+	problem2 = True
 	while(problem2 == True):
 		input1 = int(input("Enter an a (possible square mod N):\n"))
 		input2 = int(input("Enter a N (modulus):\n"))
@@ -138,8 +138,8 @@ def main():
 			continue
 		problem2 = False
 	print("Probelm 3------\n")
-
-	quad_sieve(221)
+	input3 = int(input("Choose a value for N:"))
+	quad_sieve(input3)
 	return
 
 main()

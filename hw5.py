@@ -1,6 +1,6 @@
 import math
 try:
-    from sympy import Matrix
+    from sympy import Matrix, pprint
 except:
     print("you need to download 'SymPy' library\n")
     exit(-1)
@@ -68,20 +68,22 @@ def find_B(X):
 def F_t(T,N):
 	return T**2 - N
 
-
+matrix_Ax = []
 def factor_list(list,p):
 	"""
 	Updates the list's values where it's divisible
 
 	"""
-
+	global matrix_Ax
 	isDivisible = False
 	for i in range(len(list)):
 		if list[i] % p == 0:
 			isDivisible = True
 			list[i] = int(list[i] / p)
 	if isDivisible:
+		matrix_Ax.append(list.copy())
 		factor_list(list,p)
+
 
 	return
 
@@ -93,7 +95,7 @@ def quad_sieve(N):
 	a = [√N] + 1
 	#F(a), F(a+1), F(a+2),...,F(b)
 	"""
-
+	global matrix_Ax
 	#prime basis from 2 to B
 	primes = list_primes(int(find_B(N)))
 	print("factor base:",primes)
@@ -107,25 +109,41 @@ def quad_sieve(N):
 	for a_i in range(0,a+1):
 		F_pos.append(a + a_i)
 		F_list.append(int(F_t(a + a_i,N)))
+
 	for item in F_list:
 		F_init.append(item)
-	print(F_list)
+
+	matrix_Ax.append(F_list.copy())
+
 	for prime in primes:
 		factor_list(F_list,prime)
-	print(F_list)
-	print()
 
+
+	print()
+	for i in matrix_Ax:
+		print(i)
+	F_matrix = []
 	for i in range(len(F_list)):
 		if F_list[i] == 1:
 			print("| F({}) = {}  ".format(F_pos[i],F_init[i]), end="")
+			F_matrix.append(i)
 	print()
-	print(F_pos)
-	A = []
-	A.append(F_init)
-	A.append(F_list)
-	M = Matrix(A)
-	#print(M)
 
+	matrix_2d = []
+	matrix_row = []
+
+	for i in range(len(matrix_Ax)):
+		for j in range(len(matrix_Ax[0])):
+			if j in F_matrix:
+				matrix_row.append(matrix_Ax[i][j])
+		if len(matrix_row) != 0:
+			matrix_2d.append(matrix_row.copy())
+			matrix_row = []
+	M = Matrix(matrix_2d)
+	print()
+	pprint(M)
+	print()
+	pprint(M % 2)
 def main():
 	print("Probelm 2------\n")
 	problem2 = True

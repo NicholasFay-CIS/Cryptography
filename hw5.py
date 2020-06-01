@@ -5,33 +5,24 @@ except:
     print("you need to download 'SymPy' library\n")
     exit(-1)
 
-def check_square_mod(a):
-	"""
-	int -> bool
-	"""
-	is_sqr = math.sqrt(a)
-	if((is_sqr - math.floor(is_sqr)) == 0):
-		return True
-	return False
-
-
-def squares(a, N):
-	"""
-	a (int), N (int) -> None
-	"""
-	x = a + 1
-	val = a % N
-	if(val != 0 and check_square_mod(val)):
-		root = math.floor(math.sqrt(val))
-		print("{} = {}^2 (mod {})".format(a, root, N))
-		return root
-
-	while(True):
-		if(check_square_mod((x%N))):
-			root = math.floor(math.sqrt((x%N)))
-			print("Some a ({}) % {} is not a square of some b. The smallest a that satisfies such is ~a = {} = {}^2 (mod {})".format(a, N, x, root, N))
-			return root
-		x += 1
+def my_brute_force(a, N):
+	roots = []
+	#has roots
+	for i in range(N):
+		if((i*i) % N == a):
+			roots.append(i)
+	if(len(roots) > 0):
+		print("The roots of {} mod {} are {}".format(a, N,roots))
+		return
+	#does not have roots, find the smallest ~a
+	a = a + 1
+	while(len(roots) == 0):
+		for i in range(N):
+			if((i*i) % N == a):
+				roots.append(i)
+		a += 1
+	print("The roots of {} (~a: ~a > a) mod {} are {}".format(a, N, roots))
+	return
 
 def list_primes(n):
 	"""
@@ -150,7 +141,7 @@ def main():
 	while(problem2 == True):
 		input1 = int(input("Enter an a (possible square mod N):\n"))
 		input2 = int(input("Enter a N (modulus):\n"))
-		squares(input1, input2)
+		my_brute_force(input1, input2)
 		next_input = input("Do you want to continue yes or no?:\n")
 		if(next_input == "yes" or next_input == "Yes"):
 			continue

@@ -20,7 +20,7 @@ def my_brute_force(a, N):
 		for i in range(N):
 			if((i*i) % N == a):
 				roots.append(i)
-		a += 1
+		a =  (a + 1) % N
 	print("The roots of {} (~a: ~a > a) mod {} are {}".format(a, N, roots))
 	return
 

@@ -372,6 +372,25 @@ def Polard_P_Minus_one_factoring(num):
 	print(val, num/val)
 	return
 
+def my_squares_brute_force(a, N):
+	roots = []
+	#has roots
+	for i in range(N):
+		if((i*i) % N == a):
+			roots.append(i)
+	if(len(roots) > 0):
+		print("The roots of {} mod {} are {}".format(a, N,roots))
+		return
+	#does not have roots, find the smallest ~a
+	a = a + 1
+	while(len(roots) == 0):
+		for i in range(N):
+			if((i*i) % N == a):
+				roots.append(i)
+		a =  (a + 1) % N
+	print("The roots of {} (~a: ~a > a) mod {} are {}".format(a, N, roots))
+	return
+
 
 def main():
 	num = shanks_alg(3, 19, 59, 5)
